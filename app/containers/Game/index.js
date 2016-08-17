@@ -2,10 +2,12 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
 import { selectBoard } from './selectors';
+import { setMark } from './actions';
 
 import styles from './styles.css';
 
 export class Game extends React.Component { // eslint-disable-line react/prefer-stateless-function
+
   render() {
     return (
       <div className={styles.boardContainer}>
@@ -13,7 +15,7 @@ export class Game extends React.Component { // eslint-disable-line react/prefer-
           {
             this.props.board.map((field, index) =>
               <div className={styles.field} key={index}>
-                <div className={styles.fieldRect}></div>
+                <div onClick={() => this.props.onFieldClick(index)} className={styles.fieldRect}></div>
               </div>
             )
           }
@@ -25,6 +27,7 @@ export class Game extends React.Component { // eslint-disable-line react/prefer-
 
 Game.propTypes = {
   board: React.PropTypes.array,
+  onFieldClick: React.PropTypes.func,
 };
 
 const mapStateToProps = createSelector(
@@ -32,4 +35,10 @@ const mapStateToProps = createSelector(
   (board) => ({ board })
 );
 
-export default connect(mapStateToProps)(Game);
+function mapDispatchToProps(dispatch) {
+  return {
+    onFieldClick: (index) => dispatch(setMark(index, 1)),
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Game);
