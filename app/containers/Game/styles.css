@@ -1,0 +1,39 @@
+/**
+ * styles.css
+ *
+ * App container styles
+ */
+
+.boardContainer {
+  display: flex;
+  justify-content: center;
+}
+
+.board {
+  width: 25rem;
+  background-color: #6f5138;
+  box-shadow: inset 0px 0px 10px #000000;
+  border-radius: 1rem;
+  padding: 1rem;
+  display: flex;
+  flex: 0 1 auto;
+  flex-flow: row wrap;
+  margin: -.5rem;
+}
+
+.field {
+  width: 33.33%;
+  padding: .5rem;
+}
+
+.fieldRect {
+  border-radius: 1rem;
+  background-color: #d4bdaa;
+  box-shadow: inset -1px -1px 1px #000000;
+}
+
+.fieldRect:before {
+  content: "";
+  display: block;
+  padding-bottom: 100%;
+}

@@ -10,8 +10,6 @@
  */
 
 import React from 'react';
-import { FormattedMessage } from 'react-intl';
-import messages from './messages';
 
 import Game from '../Game';
 
@@ -19,10 +17,7 @@ export default class HomePage extends React.Component { // eslint-disable-line r
 
   render() {
     return (
-      <h1>
-        <FormattedMessage {...messages.header} />
-        <Game />
-      </h1>
+      <Game />
     );
   }
 }

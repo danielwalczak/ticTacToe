@@ -3,15 +3,21 @@ import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
 import { selectBoard } from './selectors';
 
+import styles from './styles.css';
+
 export class Game extends React.Component { // eslint-disable-line react/prefer-stateless-function
   render() {
     return (
-      <div>
-        {
-          this.props.board.map((field, index) =>
-            <div key={index}>{index}</div>
-          )
-        }
+      <div className={styles.boardContainer}>
+        <div className={styles.board}>
+          {
+            this.props.board.map((field, index) =>
+              <div className={styles.field} key={index}>
+                <div className={styles.fieldRect}></div>
+              </div>
+            )
+          }
+        </div>
       </div>
     );
   }
