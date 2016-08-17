@@ -1,10 +1,11 @@
 import { fromJS } from 'immutable';
 import {
   SET_MARK,
+  EMPTY_VALUE,
 } from './constants';
 
 const initialState = fromJS({
-  board: Array(9).fill(0),
+  board: Array(9).fill(EMPTY_VALUE),
 });
 
 function gameReducer(state = initialState, action) {
