@@ -4,8 +4,8 @@ import { createSelector } from 'reselect';
 import { selectBoard } from './selectors';
 import { setMark } from './actions';
 import {
-  EMPTY_VALUE,
-  USER_VALUE,
+  EMPTY_SYMBOL,
+  PLAYER_SYMBOL,
 } from './constants';
 
 import styles from './styles.css';
@@ -13,12 +13,12 @@ import styles from './styles.css';
 export class Game extends React.Component { // eslint-disable-line react/prefer-stateless-function
 
   createField(value, index) {
-    if (value === EMPTY_VALUE) {
+    if (value === EMPTY_SYMBOL) {
       return (
         <div onClick={() => this.props.onFieldClick(index)} className={styles.fieldRect}></div>
       );
     }
-    const markClass = value === USER_VALUE ? 'userMark' : 'bootMark';
+    const markClass = value === PLAYER_SYMBOL ? 'playerMark' : 'bootMark';
     return (
       <div className={`${styles.fieldRect} ${styles[markClass]}`}></div>
     );
@@ -53,7 +53,7 @@ const mapStateToProps = createSelector(
 
 function mapDispatchToProps(dispatch) {
   return {
-    onFieldClick: (index) => dispatch(setMark(index, USER_VALUE)),
+    onFieldClick: (index) => dispatch(setMark(index, PLAYER_SYMBOL)),
   };
 }
 

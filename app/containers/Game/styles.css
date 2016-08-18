@@ -40,7 +40,7 @@
   padding-bottom: 100%;
 }
 
-.userMark::after {
+.playerMark::after {
   content: 'x';
   position: absolute;
   top: 50%;
