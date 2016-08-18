@@ -31,6 +31,9 @@ export function checkSets(board, sets) {
   return null;
 }
 
+/**
+ * Find winning move for boot
+ */
 export function findBootMove(board) {
   let fieldToSelect;
   while (fieldToSelect === undefined) {
@@ -38,6 +41,21 @@ export function findBootMove(board) {
     if (board.get(randomIndex) === ES) fieldToSelect = randomIndex;
   }
   return fieldToSelect;
+}
+
+/**
+ * Check if any player won or its a tie
+ */
+export function whoWon(board) {
+  const bootWinningSet = [[BS, BS, BS]];
+  const playerWinningSet = [[PS, PS, PS]];
+  let winner = checkSets(board, bootWinningSet);
+
+  if (winner === null) {
+    winner = checkSets(board, playerWinningSet);
+  }
+  if (!board.has(ES) && winner === null) return 0; // its a tie
+  return winner;
 }
 
 /**
