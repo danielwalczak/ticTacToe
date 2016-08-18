@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
 import { selectBoard } from './selectors';
-import { setMark } from './actions';
+import { setPlayerMark } from './actions';
 import {
   EMPTY_SYMBOL,
   PLAYER_SYMBOL,
@@ -53,7 +53,7 @@ const mapStateToProps = createSelector(
 
 function mapDispatchToProps(dispatch) {
   return {
-    onFieldClick: (index) => dispatch(setMark(index, PLAYER_SYMBOL)),
+    onFieldClick: (index) => dispatch(setPlayerMark(index, PLAYER_SYMBOL)),
   };
 }
 

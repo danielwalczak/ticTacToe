@@ -1,4 +1,5 @@
 export const SET_MARK = 'app/Game/SET_MARK';
+export const SET_PLAYER_MARK = 'app/Game/SET_PLAYER_MARK';
 
 // BOARD FIELD VALUES
 export const EMPTY_SYMBOL = 0;
