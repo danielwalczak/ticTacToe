@@ -24,6 +24,23 @@ describe('checkSets game', () => {
   });
 });
 
+describe('findBootMove', () => {
+  it('should find winning field', () => {
+    const board = fromJS([2, 0, 2, 0, 1, 1, 1, 0, 0]);
+    expect(findBootMove(board)).toEqual(1);
+  });
+
+  it('should find blocking field', () => {
+    const board = fromJS([1, 0, 1, 0, 2, 0, 0, 0, 0]);
+    expect(findBootMove(board)).toEqual(1);
+  });
+
+  it('should find random empty field', () => {
+    const board = fromJS([1, 0, 0, 0, 1, 1, 1, 0, 0]);
+    expect(findBootMove(board)).toBeA('number');
+  });
+});
+
 describe('whoWon game', () => {
   it('should return bot winning set', () => {
     const board = fromJS([2, 2, 2, 0, 0, 0, 0, 0, 0]);
@@ -38,12 +55,5 @@ describe('whoWon game', () => {
   it('should return tie', () => {
     const board = fromJS([1, 2, 2, 2, 1, 1, 1, 2, 2]);
     expect(whoWon(board)).toEqual([]);
-  });
-});
-
-describe('findBootMove', () => {
-  it('should find random empty field', () => {
-    const board = fromJS([1, 0, 0, 0, 1, 1, 1, 0, 0]);
-    expect(findBootMove(board)).toBeA('number');
   });
 });

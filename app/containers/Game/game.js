@@ -3,11 +3,14 @@ import {
   PLAYER_SYMBOL as PS,
   BOOT_SYMBOL as BS,
 } from './constants';
+
 const WINNING_INDEKSES = [
   [0, 1, 2], [3, 4, 5], [6, 7, 8], // horizontal rows
   [0, 3, 6], [1, 4, 7], [2, 5, 8], // vertical rows
   [0, 4, 8], [2, 4, 6], // diagonal
 ];
+const BOT_TO_WIN_SETS = [[2, 2, 0], [2, 0, 2], [0, 2, 2]];
+const PLAYER_TO_WIN_SETS = [[1, 1, 0], [1, 0, 1], [0, 1, 1]];
 
 /**
  * Find matching set of values in board and return list of indekses
@@ -33,10 +36,18 @@ export function checkSets(board, sets) {
 
 /**
  * Find winning move for boot
+ * @param  {array} board Game state
  */
 export function findBootMove(board) {
-  let fieldToSelect;
-  while (fieldToSelect === undefined) {
+  let fieldToSelect = null;
+  // try to win
+  let set = checkSets(board, BOT_TO_WIN_SETS);
+  if (set) return findEmptyFieldFromSet(board, set);
+  // block player
+  set = checkSets(board, PLAYER_TO_WIN_SETS);
+  if (set) return findEmptyFieldFromSet(board, set);
+
+  while (fieldToSelect === null) {
     const randomIndex = Math.floor(Math.random() * 10);
     if (board.get(randomIndex) === ES) fieldToSelect = randomIndex;
   }
@@ -44,7 +55,18 @@ export function findBootMove(board) {
 }
 
 /**
+ * Find empty field from set
+ */
+export function findEmptyFieldFromSet(board, set) {
+  for (const index of set) {
+    if (board.get(index) === ES) return index;
+  }
+  return null;
+}
+
+/**
  * Check if any player won or its a tie
+ * @param  {array} board Game state
  */
 export function whoWon(board) {
   const bootWinningSet = [[BS, BS, BS]];
