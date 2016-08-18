@@ -28,7 +28,7 @@ export function* gameBg() {
   while (winner === null) {
     yield take(SET_MARK);
     const board = yield select(selectBoard());
-    winner = whoWon(board);
+    winner = yield call(whoWon, board);
   }
   yield cancel(watcher);
   return winner;
