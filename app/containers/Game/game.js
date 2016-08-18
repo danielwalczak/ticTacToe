@@ -54,7 +54,7 @@ export function whoWon(board) {
   if (winner === null) {
     winner = checkSets(board, playerWinningSet);
   }
-  if (!board.has(ES) && winner === null) return 0; // its a tie
+  if (!board.includes(ES) && winner === null) return []; // its a tie
   return winner;
 }
 

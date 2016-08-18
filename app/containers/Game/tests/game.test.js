@@ -1,8 +1,8 @@
 import expect from 'expect';
 import { fromJS } from 'immutable';
-import { checkSets, compareArrays } from '../game';
+import { checkSets, whoWon, compareArrays } from '../game';
 
-describe('gameFunctions', () => {
+describe('checkSets game', () => {
   it('should find set of values in board', () => {
     const board = fromJS([1, 0, 1, 0, 0, 0, 0, 0, 0]);
     const sets = [[1, 0, 1]];
@@ -21,5 +21,22 @@ describe('gameFunctions', () => {
 
   it('Values in two arrays shouldn\'t match', () => {
     expect(compareArrays([1], [0])).toEqual(false);
+  });
+});
+
+describe('whoWon game', () => {
+  it('should return bot winning set', () => {
+    const board = fromJS([2, 2, 2, 0, 0, 0, 0, 0, 0]);
+    expect(whoWon(board)).toEqual([0, 1, 2]);
+  });
+
+  it('should return player winning set', () => {
+    const board = fromJS([1, 1, 1, 0, 0, 0, 0, 0, 0]);
+    expect(whoWon(board)).toEqual([0, 1, 2]);
+  });
+
+  it('should return tie', () => {
+    const board = fromJS([1, 2, 2, 2, 1, 1, 1, 2, 2]);
+    expect(whoWon(board)).toEqual([]);
   });
 });
