@@ -1,6 +1,6 @@
 import expect from 'expect';
 import { fromJS } from 'immutable';
-import { checkSets, whoWon, compareArrays } from '../game';
+import { checkSets, whoWon, findBootMove, compareArrays } from '../game';
 
 describe('checkSets game', () => {
   it('should find set of values in board', () => {
@@ -38,5 +38,12 @@ describe('whoWon game', () => {
   it('should return tie', () => {
     const board = fromJS([1, 2, 2, 2, 1, 1, 1, 2, 2]);
     expect(whoWon(board)).toEqual([]);
+  });
+});
+
+describe('findBootMove', () => {
+  it('should find random empty field', () => {
+    const board = fromJS([1, 0, 0, 0, 1, 1, 1, 0, 0]);
+    expect(findBootMove(board)).toBeA('number');
   });
 });
