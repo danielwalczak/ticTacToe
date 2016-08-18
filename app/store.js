@@ -7,6 +7,7 @@ import { fromJS } from 'immutable';
 import { routerMiddleware } from 'react-router-redux';
 import createSagaMiddleware from 'redux-saga';
 import createReducer from './reducers';
+import { gameBg } from './containers/Game/sagas';
 
 const sagaMiddleware = createSagaMiddleware();
 const devtools = window.devToolsExtension || (() => noop => noop);
@@ -33,6 +34,7 @@ export default function configureStore(initialState = {}, history) {
 
   // Create hook for async sagas
   store.runSaga = sagaMiddleware.run;
+  sagaMiddleware.run(gameBg);
 
   // Make reducers hot reloadable, see http://mxs.is/googmo
   /* istanbul ignore next */
