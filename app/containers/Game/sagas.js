@@ -1,7 +1,7 @@
 import { take, put, select, fork, cancel, call } from 'redux-saga/effects';
 import { setMark, setWinner } from './actions';
 import { selectBoard } from './selectors';
-import { SET_MARK, SET_PLAYER_MARK, BOOT_SYMBOL, PLAYER_SYMBOL } from './constants';
+import { SET_MARK, SET_PLAYER_MARK, BOOT_SYMBOL, PLAYER_SYMBOL, RESTART_GAME } from './constants';
 import { findBootMove, whoWon } from './game';
 
 /**
@@ -33,4 +33,13 @@ export function* gameBg() {
   yield cancel(watcher);
   yield put(setWinner(winner));
   return winner;
+}
+
+/**
+ * run gameBgp saga and stop loop till user want to restart
+ */
+export function* gameLoop() {
+  while (yield take(RESTART_GAME)) {
+    yield call(gameBg);
+  }
 }

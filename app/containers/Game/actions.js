@@ -2,6 +2,7 @@ import {
   SET_MARK,
   SET_PLAYER_MARK,
   SET_WINNER,
+  RESTART_GAME,
 } from './constants';
 
 export function setMark(index, value) {
@@ -23,5 +24,11 @@ export function setWinner(winner) {
   return {
     type: SET_WINNER,
     winner,
+  };
+}
+
+export function restartGame() {
+  return {
+    type: RESTART_GAME,
   };
 }

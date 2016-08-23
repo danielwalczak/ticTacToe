@@ -1,7 +1,7 @@
 import expect from 'expect';
 import { fromJS } from 'immutable';
 import gameReducer from '../reducer';
-import { setMark, setWinner } from '../actions';
+import { setMark, setWinner, restartGame } from '../actions';
 
 describe('gameReducer', () => {
   let state;
@@ -31,5 +31,13 @@ describe('gameReducer', () => {
       .set('winner', winner);
 
     expect(gameReducer(state, setWinner(winner))).toEqual(expectedResult);
+  });
+
+  it('should handle the restartGame action correctly', () => {
+    const mockState = state
+      .set('winner', 1)
+      .setIn(['board'], fromJS(Array(9).fill(1)));
+
+    expect(gameReducer(mockState, restartGame())).toEqual(state);
   });
 });

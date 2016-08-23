@@ -3,10 +3,10 @@ import { take, put, select, fork, cancel, call } from 'redux-saga/effects';
 import { fromJS } from 'immutable';
 import { createMockTask } from 'redux-saga/lib/utils';
 
-import { watchSetPlayerMark, gameBg } from '../sagas';
-import { setMark, setWinner } from '../actions';
+import { watchSetPlayerMark, gameBg, gameLoop } from '../sagas';
+import { setMark, setWinner, restartGame } from '../actions';
 import { selectBoard } from '../selectors';
-import { SET_MARK, SET_PLAYER_MARK, BOOT_SYMBOL, PLAYER_SYMBOL } from '../constants';
+import { SET_MARK, SET_PLAYER_MARK, BOOT_SYMBOL, PLAYER_SYMBOL, RESTART_GAME } from '../constants';
 import { findBootMove, whoWon } from '../game';
 
 const boardMock = fromJS([1, 1, 1, 0, 0, 0, 0, 0, 0]);
@@ -68,5 +68,19 @@ describe('gameBg Saga', () => {
   it('should return winner', () => {
     const returnValue = gameBgSaga.next().value;
     expect(returnValue).toEqual(1);
+  });
+});
+
+describe('gameLoop Saga', () => {
+  const gameLoopSaga = gameLoop();
+
+  it('should watch for RESTART_GAME action', () => {
+    const takeValue = gameLoopSaga.next(true).value;
+    expect(takeValue).toEqual(take(RESTART_GAME));
+  });
+
+  it('should call gameBg saga', () => {
+    const callValue = gameLoopSaga.next(put(RESTART_GAME)).value;
+    expect(callValue).toEqual(call(gameBg));
   });
 });
