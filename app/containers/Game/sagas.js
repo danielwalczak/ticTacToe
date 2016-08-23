@@ -1,5 +1,5 @@
 import { take, put, select, fork, cancel, call } from 'redux-saga/effects';
-import { setMark } from './actions';
+import { setMark, setWinner } from './actions';
 import { selectBoard } from './selectors';
 import { SET_MARK, SET_PLAYER_MARK, BOOT_SYMBOL, PLAYER_SYMBOL } from './constants';
 import { findBootMove, whoWon } from './game';
@@ -31,5 +31,6 @@ export function* gameBg() {
     winner = yield call(whoWon, board);
   }
   yield cancel(watcher);
+  yield put(setWinner(winner));
   return winner;
 }
