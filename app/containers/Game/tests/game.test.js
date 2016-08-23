@@ -42,18 +42,18 @@ describe('findBootMove', () => {
 });
 
 describe('whoWon game', () => {
-  it('should return bot winning set', () => {
+  it('should return bot', () => {
     const board = fromJS([2, 2, 2, 0, 0, 0, 0, 0, 0]);
-    expect(whoWon(board)).toEqual([0, 1, 2]);
+    expect(whoWon(board)).toEqual(2);
   });
 
-  it('should return player winning set', () => {
+  it('should return player', () => {
     const board = fromJS([1, 1, 1, 0, 0, 0, 0, 0, 0]);
-    expect(whoWon(board)).toEqual([0, 1, 2]);
+    expect(whoWon(board)).toEqual(1);
   });
 
   it('should return tie', () => {
     const board = fromJS([1, 2, 2, 2, 1, 1, 1, 2, 2]);
-    expect(whoWon(board)).toEqual([]);
+    expect(whoWon(board)).toEqual(0);
   });
 });

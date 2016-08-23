@@ -4,16 +4,30 @@ import {
   BOOT_SYMBOL as BS,
 } from './constants';
 
+/**
+ * List of arrays with indexes which represents rows to cross
+ * @type {Array}
+ */
 const WINNING_INDEKSES = [
   [0, 1, 2], [3, 4, 5], [6, 7, 8], // horizontal rows
   [0, 3, 6], [1, 4, 7], [2, 5, 8], // vertical rows
   [0, 4, 8], [2, 4, 6], // diagonal
 ];
-const BOT_TO_WIN_SETS = [[2, 2, 0], [2, 0, 2], [0, 2, 2]];
-const PLAYER_TO_WIN_SETS = [[1, 1, 0], [1, 0, 1], [0, 1, 1]];
+/**
+ * Posible marks variations that can win game
+ * @type {Array}
+ */
+const BOT_TO_WIN_SETS = [[BS, BS, 0], [BS, 0, BS], [0, BS, BS]];
+const PLAYER_TO_WIN_SETS = [[PS, PS, 0], [PS, 0, PS], [0, PS, PS]];
+/**
+ * Winning marks variation
+ * @type {Array}
+ */
+const bootWinningSet = [[BS, BS, BS]];
+const playerWinningSet = [[PS, PS, PS]];
 
 /**
- * Find matching set of values in board and return list of indekses
+ * Find matching set of values in board and return list of indexes
  * e.g set [1, 1, 0]
  * @param  {array} board Game state
  * @param  {array} sets  list of values to find
@@ -35,11 +49,12 @@ export function checkSets(board, sets) {
 }
 
 /**
- * Find winning move for boot
+ * Find next bot move
  * @param  {array} board Game state
+ * @return {number} index
  */
 export function findBootMove(board) {
-  let fieldToSelect = null;
+  let indexToSelect = null;
   // try to win
   let set = checkSets(board, BOT_TO_WIN_SETS);
   if (set) return findEmptyFieldFromSet(board, set);
@@ -47,11 +62,11 @@ export function findBootMove(board) {
   set = checkSets(board, PLAYER_TO_WIN_SETS);
   if (set) return findEmptyFieldFromSet(board, set);
 
-  while (fieldToSelect === null) {
+  while (indexToSelect === null) {
     const randomIndex = Math.floor(Math.random() * 10);
-    if (board.get(randomIndex) === ES) fieldToSelect = randomIndex;
+    if (board.get(randomIndex) === ES) indexToSelect = randomIndex;
   }
-  return fieldToSelect;
+  return indexToSelect;
 }
 
 /**
@@ -67,16 +82,12 @@ export function findEmptyFieldFromSet(board, set) {
 /**
  * Check if any player won or its a tie
  * @param  {array} board Game state
+ * @return {number} winner 0 - remis | BS | PS
  */
 export function whoWon(board) {
-  const bootWinningSet = [[BS, BS, BS]];
-  const playerWinningSet = [[PS, PS, PS]];
-  let winner = checkSets(board, bootWinningSet);
-
-  if (winner === null) {
-    winner = checkSets(board, playerWinningSet);
-  }
-  if (!board.includes(ES) && winner === null) return []; // its a tie
+  let winner = checkSets(board, bootWinningSet) ? BS : null;
+  if (winner === null) winner = checkSets(board, playerWinningSet) ? PS : null;
+  if (!board.includes(ES) && winner === null) return 0;
   return winner;
 }
 
