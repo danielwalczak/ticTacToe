@@ -1,23 +1,43 @@
-/*
- * HomePage
- *
- * This is the first thing users see of our App, at the '/' route
- *
- * NOTE: while this component should technically be a stateless functional
- * component (SFC), hot reloading does not currently support SFCs. If hot
- * reloading is not a neccessity for you then you can refactor it and remove
- * the linting exception.
- */
-
 import React from 'react';
+import { connect } from 'react-redux';
+import { createSelector } from 'reselect';
+import { selectWinner } from '../Game/selectors';
 
 import Game from '../Game';
 
-export default class HomePage extends React.Component { // eslint-disable-line react/prefer-stateless-function
+export class HomePage extends React.Component { // eslint-disable-line react/prefer-stateless-function
+  displayWinner() {
+    switch (this.props.winner) {
+      case 0:
+        return 'remis';
+      case 1:
+        return 'player wins';
+      case 2:
+        return 'computer wins';
+      default:
+        return '';
+    }
+  }
 
   render() {
     return (
-      <Game />
+      <div>
+        <Game />
+        <div style={{ textAlign: 'center' }}>
+          <h2>{this.displayWinner()}</h2>
+        </div>
+      </div>
     );
   }
 }
+
+HomePage.propTypes = {
+  winner: React.PropTypes.number,
+};
+
+const mapStateToProps = createSelector(
+  selectWinner(),
+  (winner) => ({ winner })
+);
+
+export default connect(mapStateToProps)(HomePage);

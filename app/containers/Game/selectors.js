@@ -7,7 +7,13 @@ const selectBoard = () => createSelector(
   (gameState) => gameState.get('board')
 );
 
+const selectWinner = () => createSelector(
+  selectGame(),
+  (gameState) => gameState.get('winner')
+);
+
 export {
   selectGame,
   selectBoard,
+  selectWinner,
 };

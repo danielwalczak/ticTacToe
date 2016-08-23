@@ -1,19 +1,25 @@
 import {
   selectBoard,
+  selectWinner,
 } from '../selectors';
 import { fromJS } from 'immutable';
 import expect from 'expect';
 
-
 describe('selectBoard', () => {
-  const boardSelector = selectBoard();
-  it('should select the board state', () => {
-    const gameState = fromJS({
+  const mockedState = fromJS({
+    game: {
+      winner: null,
       board: [],
-    });
-    const mockedState = fromJS({
-      game: gameState,
-    });
+    },
+  });
+
+  it('should select the board state', () => {
+    const boardSelector = selectBoard();
     expect(boardSelector(mockedState)).toEqual(fromJS([]));
+  });
+
+  it('should select the winner state', () => {
+    const winnerSelector = selectWinner();
+    expect(winnerSelector(mockedState)).toEqual(null);
   });
 });
