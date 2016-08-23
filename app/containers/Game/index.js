@@ -1,4 +1,5 @@
 import React from 'react';
+import ImmutablePropTypes from 'react-immutable-proptypes';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
 import { selectBoard } from './selectors';
@@ -42,7 +43,7 @@ export class Game extends React.Component { // eslint-disable-line react/prefer-
 }
 
 Game.propTypes = {
-  board: React.PropTypes.array,
+  board: ImmutablePropTypes.list,
   onFieldClick: React.PropTypes.func,
 };
 
