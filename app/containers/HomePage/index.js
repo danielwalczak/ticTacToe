@@ -14,7 +14,7 @@ export class HomePage extends React.Component { // eslint-disable-line react/pre
   displayWinner() {
     switch (this.props.winner) {
       case 0:
-        return 'remis';
+        return 'tie';
       case 1:
         return 'player wins';
       case 2:
