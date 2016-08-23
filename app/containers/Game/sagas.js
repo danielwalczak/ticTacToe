@@ -5,7 +5,7 @@ import { SET_MARK, SET_PLAYER_MARK, BOOT_SYMBOL, PLAYER_SYMBOL } from './constan
 import { findBootMove, whoWon } from './game';
 
 /**
- * Watch for player move and after do bot move
+ * Watch for player move, after it do bot move
  */
 export function* watchSetPlayerMark() {
   while (true) {

@@ -4,7 +4,7 @@ import { fromJS } from 'immutable';
 import { createMockTask } from 'redux-saga/lib/utils';
 
 import { watchSetPlayerMark, gameBg } from '../sagas';
-import { setMark } from '../actions';
+import { setMark, setWinner } from '../actions';
 import { selectBoard } from '../selectors';
 import { SET_MARK, SET_PLAYER_MARK, BOOT_SYMBOL, PLAYER_SYMBOL } from '../constants';
 import { findBootMove, whoWon } from '../game';
@@ -52,11 +52,21 @@ describe('gameBg Saga', () => {
   });
 
   it('should cancel forked watchSetPlayerMark saga', () => {
-    const selectValue = gameBgSaga.next();
-    expect(selectValue.value).toEqual(select(selectBoard()));
-    const callValue = gameBgSaga.next(boardMock);
-    expect(callValue.value).toEqual(call(whoWon, boardMock));
-    const cc = gameBgSaga.next();
-    expect(cc.value).toEqual(cancel(mockTask));
+    const selectValue = gameBgSaga.next().value;
+    expect(selectValue).toEqual(select(selectBoard()));
+    const callValue = gameBgSaga.next(boardMock).value;
+    expect(callValue).toEqual(call(whoWon, boardMock));
+    const cancelValue = gameBgSaga.next(1).value;
+    expect(cancelValue).toEqual(cancel(mockTask));
+  });
+
+  it('should dispatch setWinner action', () => {
+    const putValue = gameBgSaga.next().value;
+    expect(putValue).toEqual(put(setWinner(1)));
+  });
+
+  it('should return winner', () => {
+    const returnValue = gameBgSaga.next().value;
+    expect(returnValue).toEqual(1);
   });
 });
